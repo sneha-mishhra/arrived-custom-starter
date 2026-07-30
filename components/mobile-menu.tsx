@@ -2,7 +2,7 @@
 
 import { Dialog as DialogPrimitive, VisuallyHidden } from "radix-ui";
 import { MenuIcon, XIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -16,8 +16,21 @@ type MobileMenuProps = {
   ctaHref?: string;
 };
 
+function hashOf(href: string): string {
+  const idx = href.indexOf("#");
+  return idx === -1 ? "" : href.slice(idx);
+}
+
 export function MobileMenu({ nav, ctaText, ctaHref }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState<string>("");
+
+  useEffect(() => {
+    const sync = () => setActiveHash(window.location.hash);
+    sync();
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, []);
 
   return (
     <DialogPrimitive.Root open={open} onOpenChange={setOpen}>
@@ -49,21 +62,31 @@ export function MobileMenu({ nav, ctaText, ctaHref }: MobileMenuProps) {
           </div>
 
           <nav className="flex flex-col gap-1 px-4 font-(family-name:--font-space-mono) text-sm uppercase tracking-[0.12em]">
-            {nav.map((link) => (
-              <ScrollLink
-                key={link.href}
-                href={link.href}
-                onClick={() => !link.href.includes("#") && setOpen(false)}
-                onAfterScroll={() => setOpen(false)}
-                className="flex items-center gap-2 rounded-md px-3 py-3 hover:bg-(--event-base-text)/5"
-              >
-                {link.label}
-                <span
-                  aria-hidden="true"
-                  className="inline-block h-1.5 w-1.5 bg-white/40"
-                />
-              </ScrollLink>
-            ))}
+            {nav.map((link) => {
+              const linkHash = hashOf(link.href);
+              const isActive =
+                linkHash === activeHash && activeHash !== "";
+              return (
+                <ScrollLink
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => {
+                    setActiveHash(linkHash);
+                    if (!link.href.includes("#")) setOpen(false);
+                  }}
+                  onAfterScroll={() => setOpen(false)}
+                  className="flex items-center gap-2 rounded-md px-3 py-3 hover:bg-(--event-base-text)/5"
+                >
+                  {link.label}
+                  <span
+                    aria-hidden="true"
+                    className={`inline-block h-1.5 w-1.5 transition-colors ${
+                      isActive ? "bg-[#163EE8]" : "bg-white/40"
+                    }`}
+                  />
+                </ScrollLink>
+              );
+            })}
           </nav>
 
           {ctaHref && ctaText ? (

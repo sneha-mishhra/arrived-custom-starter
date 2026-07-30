@@ -120,7 +120,7 @@ function SessionAccordion({
 
         return (
           <div key={session.id} className="py-4 md:py-6">
-            <div className="md:grid md:grid-cols-10 md:gap-x-10 lg:gap-x-20">
+            <div className="md:grid md:grid-cols-10 md:gap-x-4 lg:gap-x-6">
               <div className="font-heading hidden text-sm md:col-span-3 md:flex md:flex-col md:text-lg lg:text-xl">
                 <p className="text-left">{timeLabel}</p>
               </div>
@@ -134,7 +134,7 @@ function SessionAccordion({
               </div>
             </div>
             {hasDetails && (
-              <div className="mt-3 md:mt-4 md:grid md:grid-cols-10 md:gap-x-10 lg:gap-x-20">
+              <div className="mt-3 md:mt-4 md:grid md:grid-cols-10 md:gap-x-4 lg:gap-x-6">
                 <div className="col-span-3 flex flex-wrap gap-2">
                   {track && (
                     <Badge

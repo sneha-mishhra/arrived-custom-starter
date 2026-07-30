@@ -68,42 +68,45 @@ export function EventPage({ eventData, eventId, env }: EventPageProps) {
       {form ? (
         <Container
           id="register"
-          className="flex max-w-7xl flex-col items-center text-center"
+          className="max-w-7xl"
           wrapperClassName="bg-black text-white pt-4"
         >
-          <h2 className="text-4xl font-semibold">Registration</h2>
-          <p className="mt-3 text-base opacity-80 md:text-lg">
-            To join the event, please register below.
-          </p>
-          <div className="mt-10 flex w-full items-center justify-center">
-            <RegistrationForm
-              eventId={eventId}
-              env={env}
-              form={form}
-              redirectTo="/confirmation"
-              buttonText={form.form_button_text}
-            />
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-12">
+            <div id="location" className="flex flex-col">
+              <h2 className="text-4xl font-semibold">Registration</h2>
+              <p className="mt-3 text-base opacity-80 md:text-lg">
+                To join the event, please register below.
+              </p>
+              <div className="mt-10 w-full">
+                <RegistrationForm
+                  eventId={eventId}
+                  env={env}
+                  form={form}
+                  redirectTo="/confirmation"
+                  buttonText={form.form_button_text}
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col">
+              <p className="text-base opacity-80 md:text-lg">
+                Please register to see the exact location of this event.
+              </p>
+              <div className="mt-6 overflow-hidden rounded-lg border border-white/[0.08]">
+                <iframe
+                  title="Kuala Lumpur, Malaysia"
+                  src="https://maps.google.com/maps?q=Kuala+Lumpur%2C+Malaysia&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="520"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="block w-full border-0 [filter:invert(0.92)_hue-rotate(180deg)_saturate(0.9)_contrast(0.95)]"
+                />
+              </div>
+            </div>
           </div>
         </Container>
       ) : null}
-
-      <Container id="location" className="max-w-7xl">
-        <SectionHeading
-          title="Location"
-          description="Please register to see the exact location of this event."
-        />
-        <div className="mt-8 overflow-hidden rounded-lg border border-white/[0.08]">
-          <iframe
-            title="Kuala Lumpur, Malaysia"
-            src="https://maps.google.com/maps?q=Kuala+Lumpur%2C+Malaysia&t=&z=12&ie=UTF8&iwloc=&output=embed"
-            width="100%"
-            height="450"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="block w-full border-0 [filter:invert(0.92)_hue-rotate(180deg)_saturate(0.9)_contrast(0.95)]"
-          />
-        </div>
-      </Container>
 
       {hasText(content.companyAboutTitle) ||
       hasText(content.companyAboutDescription) ? (

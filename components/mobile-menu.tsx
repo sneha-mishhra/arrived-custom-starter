@@ -48,16 +48,20 @@ export function MobileMenu({ nav, ctaText, ctaHref }: MobileMenuProps) {
             </DialogPrimitive.Close>
           </div>
 
-          <nav className="flex flex-col gap-1 px-4">
+          <nav className="flex flex-col gap-1 px-4 font-(family-name:--font-space-mono) text-sm uppercase tracking-[0.12em]">
             {nav.map((link) => (
               <ScrollLink
                 key={link.href}
                 href={link.href}
                 onClick={() => !link.href.includes("#") && setOpen(false)}
                 onAfterScroll={() => setOpen(false)}
-                className="rounded-md px-3 py-2.5 text-base font-medium hover:bg-(--event-base-text)/5"
+                className="flex items-center gap-2 rounded-md px-3 py-3 hover:bg-(--event-base-text)/5"
               >
                 {link.label}
+                <span
+                  aria-hidden="true"
+                  className="inline-block h-1.5 w-1.5 bg-white/40"
+                />
               </ScrollLink>
             ))}
           </nav>
@@ -67,9 +71,10 @@ export function MobileMenu({ nav, ctaText, ctaHref }: MobileMenuProps) {
               <ScrollLink
                 href={ctaHref}
                 onAfterScroll={() => setOpen(false)}
-                className="block rounded-(--event-border-radius) bg-(--event-primary-bg) px-4 py-3 text-center font-semibold text-(--event-primary-text)"
+                className="flex items-center justify-center gap-1.5 rounded-md bg-(--event-primary-bg) px-4 py-3 text-center font-(family-name:--font-space-mono) text-sm font-bold uppercase tracking-[0.12em] text-(--event-primary-text)"
               >
                 {ctaText}
+                <span aria-hidden="true">↗</span>
               </ScrollLink>
             </div>
           ) : null}

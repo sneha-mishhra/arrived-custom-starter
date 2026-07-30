@@ -29,17 +29,17 @@ export function Header({
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-(--event-base-text)/10 bg-(--event-base-bg)/90 backdrop-blur">
-      <div className="mx-auto flex h-28 max-w-7xl items-center justify-between gap-4 px-4 py-2 sm:px-8">
-        <div className="relative z-60 flex w-full max-w-40.5 items-center sm:max-w-53">
+    <header className="sticky top-0 z-40 border-b border-white/[0.08] text-white">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-8">
+        <div className="relative z-60 flex items-center">
           {logo && (
             <Link href="/">
               <Image
                 src={logo}
                 alt={logoAlt}
-                width={250}
-                height={100}
-                className="relative z-60 max-h-12 w-full object-contain object-left"
+                width={180}
+                height={40}
+                className="relative z-60 h-8 w-auto object-contain object-left"
                 draggable={false}
               />
             </Link>

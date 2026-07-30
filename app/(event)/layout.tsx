@@ -1,15 +1,26 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
+import { DM_Sans, Lora, Space_Mono } from "next/font/google";
 import "../globals.css";
 
 import { EventShell } from "@/components/event-shell";
 import { styleValue } from "@/components/helpers";
 import { getPublicEvent } from "@/lib/happily/queries";
 
-const openSans = Open_Sans({
-  variable: "--font-open-sans",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+});
+
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin"],
+});
+
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -36,22 +47,27 @@ export default async function EventLayout({
   const eventData = await getPublicEvent();
   const styles = eventData.event.styles;
 
+  // Page = all black + all white text. Flagright Blue reserved for CTA buttons:
+  // - --event-primary-bg drives nav CTA, mobile menu CTA, submit button, calendar
+  //   button (see navbar / mobile-menu / registration-form / add-to-calendar).
+  // - --event-accent-bg drives the hero "Register" button.
+  // Section-level bgs (secondary, base) stay black so nothing but buttons is blue.
   const eventVars = {
-    "--event-primary-bg": styleValue(styles, "primaryBg", "#171717"),
-    "--event-primary-text": styleValue(styles, "primaryText", "#ffffff"),
-    "--event-secondary-bg": styleValue(styles, "secondaryBg", "#f4f4f5"),
-    "--event-secondary-text": styleValue(styles, "secondaryText", "#171717"),
-    "--event-accent-bg": styleValue(styles, "accentBg", "#171717"),
-    "--event-accent-text": styleValue(styles, "accentText", "#ffffff"),
-    "--event-base-bg": styleValue(styles, "baseBg", "#ffffff"),
-    "--event-base-text": styleValue(styles, "baseText", "#171717"),
+    "--event-primary-bg": "#1668F7",
+    "--event-primary-text": "#FFFFFF",
+    "--event-secondary-bg": "#000000",
+    "--event-secondary-text": "#FFFFFF",
+    "--event-accent-bg": "#1668F7",
+    "--event-accent-text": "#FFFFFF",
+    "--event-base-bg": "#000000",
+    "--event-base-text": "#FFFFFF",
     "--event-border-radius": styleValue(styles, "borderRadius", "8px"),
   } as CSSProperties;
 
   return (
     <html
       lang="en"
-      className={`${openSans.variable} ${openSans.className} h-full antialiased`}
+      className={`${dmSans.variable} ${lora.variable} ${spaceMono.variable} ${dmSans.className} h-full antialiased`}
     >
       <body style={eventVars} className="min-h-full flex flex-col">
         <EventShell eventData={eventData}>{children}</EventShell>

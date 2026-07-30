@@ -8,6 +8,7 @@ type ContentSectionProps = {
   title: string;
   description?: string | null;
   image?: string | null;
+  wrapperClassName?: string;
 };
 
 export function ContentSection({
@@ -15,10 +16,12 @@ export function ContentSection({
   title,
   description,
   image,
+  wrapperClassName,
 }: ContentSectionProps) {
   return (
     <Container
       id={id}
+      wrapperClassName={wrapperClassName}
       className={`grid max-w-7xl gap-8 ${image ? "lg:grid-cols-2 lg:items-center" : ""}`}
     >
       <div>

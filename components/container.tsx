@@ -13,7 +13,12 @@ export function Container({
   ...props
 }: ContainerProps) {
   return (
-    <section className={cn("w-full px-4 py-16 sm:px-8", wrapperClassName)}>
+    <section
+      className={cn(
+        "w-full border-b border-white/[0.08] px-4 py-16 sm:px-8",
+        wrapperClassName,
+      )}
+    >
       <div className={cn("mx-auto max-w-7xl", className)} {...props}>
         {children}
       </div>

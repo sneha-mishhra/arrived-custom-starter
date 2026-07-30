@@ -32,6 +32,7 @@ export function EventPage({ eventData, eventId, env }: EventPageProps) {
           title={text(content.aboutTitle, "About")}
           description={content.aboutDescription}
           image={content.aboutImage}
+          wrapperClassName="pt-48"
         />
       ) : null}
 
@@ -68,7 +69,7 @@ export function EventPage({ eventData, eventId, env }: EventPageProps) {
         <Container
           id="register"
           className="flex max-w-7xl flex-col items-center text-center"
-          wrapperClassName="bg-(--event-accent-bg) text-(--event-accent-text)"
+          wrapperClassName="bg-black text-white"
         >
           {form.form_title ? (
             <h2 className="text-4xl font-semibold">
@@ -91,6 +92,24 @@ export function EventPage({ eventData, eventId, env }: EventPageProps) {
           </div>
         </Container>
       ) : null}
+
+      <Container id="location" className="max-w-7xl">
+        <SectionHeading
+          title="Location"
+          description="Please register to see the exact location of this event."
+        />
+        <div className="mt-8 overflow-hidden rounded-lg border border-white/[0.08]">
+          <iframe
+            title="Kuala Lumpur, Malaysia"
+            src="https://maps.google.com/maps?q=Kuala+Lumpur%2C+Malaysia&t=&z=12&ie=UTF8&iwloc=&output=embed"
+            width="100%"
+            height="450"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="block w-full border-0 [filter:invert(0.92)_hue-rotate(180deg)_saturate(0.9)_contrast(0.95)]"
+          />
+        </div>
+      </Container>
 
       {hasText(content.companyAboutTitle) ||
       hasText(content.companyAboutDescription) ? (

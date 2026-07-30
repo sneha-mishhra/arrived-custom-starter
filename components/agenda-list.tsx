@@ -4,12 +4,6 @@ import { useMemo } from "react";
 
 import type { PublicEventData } from "@/lib/happily/types";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -101,7 +95,7 @@ function SessionAccordion({
   event: PublicEventData["event"];
 }) {
   return (
-    <Accordion type="single" collapsible className="font-body grid grid-cols-1">
+    <div className="font-body grid grid-cols-1 divide-y divide-white/10">
       {sessions.map((session) => {
         const timeLabel = eventTimeRange({
           ...event,
@@ -118,18 +112,15 @@ function SessionAccordion({
           .map((ss) => speakerMap.get(ss.speaker_id))
           .filter((s): s is Speaker => s != null);
 
-        const hasContent =
+        const hasDetails =
           session.description ||
           sessionSpeakers.length > 0 ||
           track ||
           session.location;
 
         return (
-          <AccordionItem value={session.id} key={session.id}>
-            <AccordionTrigger
-              disabled={!hasContent}
-              className="w-full no-underline hover:no-underline md:grid md:grid-cols-10 md:gap-x-10 lg:gap-x-20"
-            >
+          <div key={session.id} className="py-4 md:py-6">
+            <div className="md:grid md:grid-cols-10 md:gap-x-10 lg:gap-x-20">
               <div className="font-heading hidden text-sm md:col-span-3 md:flex md:flex-col md:text-lg lg:text-xl">
                 <p className="text-left">{timeLabel}</p>
               </div>
@@ -141,40 +132,42 @@ function SessionAccordion({
                   {session.name}
                 </p>
               </div>
-            </AccordionTrigger>
-            <AccordionContent className="md:grid md:grid-cols-10 md:gap-x-10 md:pb-6 lg:gap-x-20">
-              <div className="col-span-3 flex flex-wrap gap-2">
-                {track && (
-                  <Badge
-                    variant="secondary"
-                    className="cursor-auto rounded-sm font-normal"
-                  >
-                    {track.name}
-                  </Badge>
+            </div>
+            {hasDetails && (
+              <div className="mt-3 md:mt-4 md:grid md:grid-cols-10 md:gap-x-10 lg:gap-x-20">
+                <div className="col-span-3 flex flex-wrap gap-2">
+                  {track && (
+                    <Badge
+                      variant="secondary"
+                      className="cursor-auto rounded-sm bg-[#163EE8] font-normal text-white hover:bg-[#163EE8]"
+                    >
+                      {track.name}
+                    </Badge>
+                  )}
+                  {session.location && (
+                    <Badge
+                      variant="secondary"
+                      className="cursor-auto rounded-sm font-normal"
+                    >
+                      {session.location}
+                    </Badge>
+                  )}
+                </div>
+
+                {session.description && (
+                  <div className="col-span-7 col-start-4 pt-3 text-sm leading-relaxed tracking-wide">
+                    <Markdown>{session.description}</Markdown>
+                  </div>
                 )}
-                {session.location && (
-                  <Badge
-                    variant="secondary"
-                    className="cursor-auto rounded-sm font-normal"
-                  >
-                    {session.location}
-                  </Badge>
+                {sessionSpeakers.length > 0 && (
+                  <SpeakersList speakers={sessionSpeakers} />
                 )}
               </div>
-
-              {session.description && (
-                <div className="col-span-7 col-start-4 pt-3 text-sm leading-relaxed tracking-wide">
-                  <Markdown>{session.description}</Markdown>
-                </div>
-              )}
-              {sessionSpeakers.length > 0 && (
-                <SpeakersList speakers={sessionSpeakers} />
-              )}
-            </AccordionContent>
-          </AccordionItem>
+            )}
+          </div>
         );
       })}
-    </Accordion>
+    </div>
   );
 }
 

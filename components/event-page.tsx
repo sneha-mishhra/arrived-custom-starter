@@ -69,7 +69,7 @@ export function EventPage({ eventData, eventId, env }: EventPageProps) {
         <Container
           id="register"
           className="flex max-w-7xl flex-col items-center text-center"
-          wrapperClassName="bg-black text-white"
+          wrapperClassName="bg-black text-white pt-4"
         >
           <h2 className="text-4xl font-semibold">Registration</h2>
           <p className="mt-3 text-base opacity-80 md:text-lg">

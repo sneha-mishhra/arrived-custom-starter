@@ -30,8 +30,14 @@ export function SpeakersGrid({ speakers }: SpeakersGridProps) {
     });
 
   return (
-    <div className="relative min-h-[720px]">
-      <ChromaGrid items={items} radius={220} damping={0.5} fadeOut={0.5} />
+    <div className="relative min-h-[480px]">
+      <ChromaGrid
+        items={items}
+        columns={4}
+        radius={220}
+        damping={0.5}
+        fadeOut={0.5}
+      />
     </div>
   );
 }

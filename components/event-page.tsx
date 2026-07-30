@@ -32,7 +32,7 @@ export function EventPage({ eventData, eventId, env }: EventPageProps) {
           title={text(content.aboutTitle, "About")}
           description={content.aboutDescription}
           image={content.aboutImage}
-          wrapperClassName="pt-48"
+          wrapperClassName="pt-32"
         />
       ) : null}
 
@@ -71,16 +71,10 @@ export function EventPage({ eventData, eventId, env }: EventPageProps) {
           className="flex max-w-7xl flex-col items-center text-center"
           wrapperClassName="bg-black text-white"
         >
-          {form.form_title ? (
-            <h2 className="text-4xl font-semibold">
-              {text(form.form_title, "Register")}
-            </h2>
-          ) : null}
-          {form.form_description ? (
-            <Markdown className="mt-3 text-base opacity-80 md:text-lg">
-              {form.form_description}
-            </Markdown>
-          ) : null}
+          <h2 className="text-4xl font-semibold">Registration</h2>
+          <p className="mt-3 text-base opacity-80 md:text-lg">
+            To join the event, please register below.
+          </p>
           <div className="mt-10 flex w-full items-center justify-center">
             <RegistrationForm
               eventId={eventId}

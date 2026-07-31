@@ -30,7 +30,7 @@ export function Header({
 
   return (
     <header className="sticky top-0 z-40 border-b border-white/[0.08] text-white">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-9">
         <div className="relative z-60 flex items-center">
           {logo && (
             <Link href="/">

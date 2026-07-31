@@ -1,12 +1,14 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 import type { PublicEventData } from "@/lib/happily/types";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 
 import { eventTimeRange, formatEventDate } from "./helpers";
 import { Markdown } from "./markdown";
@@ -83,6 +85,105 @@ function SpeakersList({ speakers }: { speakers: Speaker[] }) {
   );
 }
 
+function SessionRow({
+  session,
+  speakerMap,
+  trackMap,
+  event,
+}: {
+  session: Session;
+  speakerMap: Map<string, Speaker>;
+  trackMap: Map<number, Track>;
+  event: PublicEventData["event"];
+}) {
+  const [open, setOpen] = useState(false);
+  const timeLabel = eventTimeRange({
+    ...event,
+    start_date: session.start_time,
+    end_date: session.end_time,
+  });
+  const track =
+    session.track_id != null ? (trackMap.get(session.track_id) ?? null) : null;
+  const sessionSpeakers = session.speakers
+    .map((ss) => speakerMap.get(ss.speaker_id))
+    .filter((s): s is Speaker => s != null);
+  const hasDetails =
+    !!session.description ||
+    sessionSpeakers.length > 0 ||
+    !!track ||
+    !!session.location;
+
+  return (
+    <div className="py-2 md:py-3">
+      <button
+        type="button"
+        onClick={() => hasDetails && setOpen((v) => !v)}
+        aria-expanded={hasDetails ? open : undefined}
+        className={cn(
+          "flex w-full items-start text-left",
+          hasDetails ? "cursor-pointer" : "cursor-default",
+        )}
+      >
+        <div className="flex-1 md:grid md:grid-cols-10 md:gap-x-4 lg:gap-x-6">
+          <div className="hidden text-sm md:col-span-3 md:flex md:flex-col md:text-lg lg:text-xl">
+            <p className="text-left">{timeLabel}</p>
+          </div>
+          <div className="flex w-full flex-col items-start text-left md:col-span-6">
+            <p className="text-left text-sm md:hidden">{timeLabel}</p>
+            <p className="text-base md:text-lg lg:text-xl">{session.name}</p>
+          </div>
+        </div>
+        {hasDetails && (
+          <ChevronDown
+            className={cn(
+              "ml-2 h-5 w-5 shrink-0 self-center transition-transform",
+              open && "rotate-180",
+            )}
+          />
+        )}
+      </button>
+      {hasDetails && (
+        <div
+          className={cn(
+            "mt-3 md:mt-4",
+            open
+              ? "block md:grid md:grid-cols-10 md:gap-x-4 lg:gap-x-6"
+              : "hidden",
+          )}
+        >
+          <div className="col-span-3 flex flex-wrap gap-2">
+            {track && (
+              <Badge
+                variant="secondary"
+                className="cursor-auto rounded-sm bg-[#163EE8] font-normal text-white hover:bg-[#163EE8]"
+              >
+                {track.name}
+              </Badge>
+            )}
+            {session.location && (
+              <Badge
+                variant="secondary"
+                className="cursor-auto rounded-sm font-normal"
+              >
+                {session.location}
+              </Badge>
+            )}
+          </div>
+
+          {session.description && (
+            <div className="col-span-7 col-start-4 pt-3 text-sm leading-relaxed tracking-wide">
+              <Markdown>{session.description}</Markdown>
+            </div>
+          )}
+          {sessionSpeakers.length > 0 && (
+            <SpeakersList speakers={sessionSpeakers} />
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function SessionAccordion({
   sessions,
   speakerMap,
@@ -96,77 +197,15 @@ function SessionAccordion({
 }) {
   return (
     <div className="font-body grid grid-cols-1 divide-y divide-white/10">
-      {sessions.map((session) => {
-        const timeLabel = eventTimeRange({
-          ...event,
-          start_date: session.start_time,
-          end_date: session.end_time,
-        });
-
-        const track =
-          session.track_id != null
-            ? (trackMap.get(session.track_id) ?? null)
-            : null;
-
-        const sessionSpeakers = session.speakers
-          .map((ss) => speakerMap.get(ss.speaker_id))
-          .filter((s): s is Speaker => s != null);
-
-        const hasDetails =
-          session.description ||
-          sessionSpeakers.length > 0 ||
-          track ||
-          session.location;
-
-        return (
-          <div key={session.id} className="py-2 md:py-3">
-            <div className="md:grid md:grid-cols-10 md:gap-x-4 lg:gap-x-6">
-              <div className="font-heading hidden text-sm md:col-span-3 md:flex md:flex-col md:text-lg lg:text-xl">
-                <p className="text-left">{timeLabel}</p>
-              </div>
-              <div className="flex w-full flex-col items-start text-left md:col-span-6">
-                <p className="font-heading text-left text-sm md:hidden">
-                  {timeLabel}
-                </p>
-                <p className="text-base font-semibold tracking-wider md:text-lg lg:text-xl">
-                  {session.name}
-                </p>
-              </div>
-            </div>
-            {hasDetails && (
-              <div className="mt-3 md:mt-4 md:grid md:grid-cols-10 md:gap-x-4 lg:gap-x-6">
-                <div className="col-span-3 flex flex-wrap gap-2">
-                  {track && (
-                    <Badge
-                      variant="secondary"
-                      className="cursor-auto rounded-sm bg-[#163EE8] font-normal text-white hover:bg-[#163EE8]"
-                    >
-                      {track.name}
-                    </Badge>
-                  )}
-                  {session.location && (
-                    <Badge
-                      variant="secondary"
-                      className="cursor-auto rounded-sm font-normal"
-                    >
-                      {session.location}
-                    </Badge>
-                  )}
-                </div>
-
-                {session.description && (
-                  <div className="col-span-7 col-start-4 pt-3 text-sm leading-relaxed tracking-wide">
-                    <Markdown>{session.description}</Markdown>
-                  </div>
-                )}
-                {sessionSpeakers.length > 0 && (
-                  <SpeakersList speakers={sessionSpeakers} />
-                )}
-              </div>
-            )}
-          </div>
-        );
-      })}
+      {sessions.map((session) => (
+        <SessionRow
+          key={session.id}
+          session={session}
+          speakerMap={speakerMap}
+          trackMap={trackMap}
+          event={event}
+        />
+      ))}
     </div>
   );
 }

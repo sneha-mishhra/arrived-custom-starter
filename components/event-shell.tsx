@@ -2,8 +2,9 @@ import type { ReactNode } from "react";
 
 import type { PublicEventData } from "@/lib/happily/types";
 
+import Image from "next/image";
+
 import { Footer } from "./footer";
-import Grainient from "./grainient";
 import { Header } from "./header";
 import { styleValue, text } from "./helpers";
 import type { NavLinkItem } from "./navbar";
@@ -40,42 +41,24 @@ export function EventShell({ eventData, children }: EventShellProps) {
           via border-b on Container (see container.tsx). */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 px-4 sm:px-8"
+        className="pointer-events-none absolute inset-0 z-0 px-9"
       >
         <div className="mx-auto h-full max-w-7xl border-x border-white/[0.08]" />
       </div>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-screen overflow-hidden [mask-image:linear-gradient(to_bottom,black_0%,black_65%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_65%,transparent_100%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-screen overflow-hidden [mask-image:linear-gradient(to_bottom,black_0%,black_60%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_60%,transparent_100%)]"
       >
-        {/* Palette hex codes per spec; colorBalance/contrast/color2 tuned so
-             the shader is actually visible at nav+hero scale. At the specced
-             values (0.0/1.5/#252139) the whole surface crushes to black once
-             the container is taller than a nav bar. */}
-        <Grainient
-          color1="#7743c0"
-          color2="#000000"
-          color3="#0a0512"
-          timeSpeed={0.8}
-          colorBalance={0.5}
-          warpStrength={1.0}
-          warpFrequency={7.8}
-          warpSpeed={2.0}
-          warpAmplitude={50.0}
-          blendAngle={14}
-          blendSoftness={0.72}
-          rotationAmount={500.0}
-          noiseScale={1.6}
-          grainAmount={0.05}
-          grainScale={0.8}
-          grainAnimated={false}
-          contrast={0.9}
-          gamma={1.0}
-          saturation={1.15}
-          centerX={0.0}
-          centerY={0.0}
-          zoom={0.9}
+        <Image
+          src="/kl-hero.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
         />
+        {/* Subtle darken so white text stays legible over the bright sky */}
+        <div className="absolute inset-0 bg-black/30" />
       </div>
       <Header
         logo={event.logo_url}

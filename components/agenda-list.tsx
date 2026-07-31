@@ -119,7 +119,7 @@ function SessionAccordion({
           session.location;
 
         return (
-          <div key={session.id} className="py-4 md:py-6">
+          <div key={session.id} className="py-2 md:py-3">
             <div className="md:grid md:grid-cols-10 md:gap-x-4 lg:gap-x-6">
               <div className="font-heading hidden text-sm md:col-span-3 md:flex md:flex-col md:text-lg lg:text-xl">
                 <p className="text-left">{timeLabel}</p>

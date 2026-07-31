@@ -73,14 +73,14 @@ export function HeroSection({ event, formActive }: HeroSectionProps) {
           event.display_settings.buttonLinks.heroCTA.text ? (
             <Button
               asChild
-              size="lg"
-              className="mt-4 min-h-12 bg-(--event-accent-bg) px-5 py-3 font-semibold text-(--event-accent-text) hover:bg-(--event-accent-bg)/85"
+              className="mt-4 inline-flex items-center gap-1.5 rounded-md bg-(--event-primary-bg) px-4 py-2 font-(family-name:--font-space-mono) text-xs font-bold uppercase tracking-[0.12em] text-(--event-primary-text) transition-opacity hover:bg-(--event-primary-bg) hover:opacity-90"
             >
               <ScrollLink href="#register">
                 {text(
                   event.display_settings.buttonLinks.heroCTA.text,
-                  "Register",
+                  "Request to Join",
                 )}
+                <span aria-hidden="true">↗</span>
               </ScrollLink>
             </Button>
           ) : null}

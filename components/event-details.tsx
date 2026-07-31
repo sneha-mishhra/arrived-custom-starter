@@ -12,7 +12,10 @@ export function EventDetails({
   includeLocation = true,
 }: EventDetailsProps) {
   const date = eventDateRange(event);
-  const time = eventTimeRange(event);
+  // Hardcoded override; the API returns the raw start_time (1:58 PM) but the
+  // event is scheduled to open at 10 AM. Update this string if the event time changes.
+  const time = "10:00 AM";
+  void eventTimeRange;
   const ds = event.display_settings;
 
   const elements = [

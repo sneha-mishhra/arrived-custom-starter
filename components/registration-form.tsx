@@ -75,6 +75,43 @@ export function RegistrationForm({
       action={formAction}
       className="mx-auto flex w-full max-w-lg flex-col gap-4 text-left"
     >
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid w-full gap-1.5">
+          <Label htmlFor="first_name">First name *</Label>
+          <Input
+            id="first_name"
+            name="first_name"
+            type="text"
+            required
+            placeholder="First name"
+            autoComplete="given-name"
+          />
+        </div>
+        <div className="grid w-full gap-1.5">
+          <Label htmlFor="last_name">Last name *</Label>
+          <Input
+            id="last_name"
+            name="last_name"
+            type="text"
+            required
+            placeholder="Last name"
+            autoComplete="family-name"
+          />
+        </div>
+      </div>
+
+      <div className="grid w-full gap-1.5">
+        <Label htmlFor="email">Email *</Label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          required
+          placeholder="you@company.com"
+          autoComplete="email"
+        />
+      </div>
+
       <div className="grid w-full gap-1.5">
         <Label htmlFor="company">What company do you work for? *</Label>
         <Input
@@ -130,10 +167,10 @@ export function RegistrationForm({
       <Button
         type="submit"
         disabled={isPending}
-        size="lg"
-        className="mt-2 min-h-12 w-full rounded-(--event-border-radius) bg-(--event-primary-bg) text-base font-semibold text-(--event-primary-text) hover:bg-(--event-primary-bg)/85"
+        className="mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-md bg-(--event-primary-bg) px-4 py-3 font-(family-name:--font-space-mono) text-xs font-bold uppercase tracking-[0.12em] text-(--event-primary-text) transition-opacity hover:bg-(--event-primary-bg) hover:opacity-90"
       >
-        {isPending ? "Submitting..." : buttonText || "Request to Join"}
+        {isPending ? "Submitting…" : buttonText || "Request to Join"}
+        <span aria-hidden="true">↗</span>
       </Button>
     </form>
   );

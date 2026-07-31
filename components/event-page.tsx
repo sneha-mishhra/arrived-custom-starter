@@ -36,12 +36,18 @@ export function EventPage({ eventData, eventId, env }: EventPageProps) {
         />
       ) : null}
 
-      {sessions.length ? (
-        <Container id="agenda">
+      {hasText(content.agendaTitle) || hasText(content.agendaDescription) ? (
+        <Container id="panel-theme">
           <SectionHeading
-            title={text(content.agendaTitle, "Agenda")}
+            title={text(content.agendaTitle, "Panel Discussion Theme")}
             description={content.agendaDescription}
           />
+        </Container>
+      ) : null}
+
+      {sessions.length ? (
+        <Container id="agenda">
+          <SectionHeading title="Agenda" />
           <div className="mt-8">
             <AgendaList
               sessions={sessions}
@@ -71,7 +77,7 @@ export function EventPage({ eventData, eventId, env }: EventPageProps) {
           className="max-w-7xl"
           wrapperClassName="bg-black text-white pt-4"
         >
-          <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-12">
+          <div className="grid gap-10 md:grid-cols-2 md:items-start md:gap-8 lg:gap-12">
             <div id="location" className="flex flex-col">
               <h2 className="text-4xl font-semibold">Registration</h2>
               <p className="mt-3 text-base opacity-80 md:text-lg">

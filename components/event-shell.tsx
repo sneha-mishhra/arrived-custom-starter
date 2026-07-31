@@ -20,11 +20,9 @@ export function EventShell({ eventData, children }: EventShellProps) {
 
   const nav: NavLinkItem[] = [
     { label: "About", href: "/#about" },
+    { label: "Panel Theme", href: "/#panel-theme" },
     { label: "Agenda", href: "/#agenda" },
     { label: "Speakers", href: "/#speakers" },
-    { label: "Host", href: "/#host" },
-    { label: "Sponsors", href: "/#sponsors" },
-    { label: "FAQ", href: "/#faq" },
     ...(event.photos_toggle ? [{ label: "Gallery", href: "/photos" }] : []),
   ];
 

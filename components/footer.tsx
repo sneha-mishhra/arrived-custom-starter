@@ -42,17 +42,17 @@ export function Footer({ baseTextColor: _baseTextColor }: FooterProps) {
       <div className="border-t border-white/[0.08]">
         <div className="mx-auto flex max-w-7xl items-center justify-center px-9 py-6">
           <a
-            href="https://arrived.happily.com/signup?utm_source=event-page&utm_medium=footer&utm_campaign=signup"
+            href="https://app.happily.events/signup?utm_source=event-page&utm_medium=footer&utm_campaign=signup"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Powered by Happily Arrived"
-            className="opacity-70 transition-opacity hover:opacity-100"
+            className="opacity-90 transition-opacity hover:opacity-100"
           >
             <Image
-              src="/powered-by-happily-arrived-light.svg"
-              width={140}
-              height={26}
-              className="h-6 w-auto object-contain"
+              src="/powered-by-happily-arrived-alt.svg"
+              width={292}
+              height={55}
+              className="h-16 w-auto object-contain"
               alt="Powered by Happily Arrived"
               draggable={false}
             />
